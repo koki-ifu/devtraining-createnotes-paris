@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[//イベントを受信したときにJavaScriptコンソールにsys_idを記録する代わりに、
-  //ClientScriptは選択されたレコードのフィールド値をサーバから取得して、
-  //Notes Body Widgetに表示する必要がある
+        <client_script><![CDATA[
 
 
 function($scope,$rootScope) {
     /* widget controller */
     var c = this;
 
+	//$rootScope.$on関数で、NotesListWidgetで発行されたイベントを受け取る
+	//selectNote:NotesListWidgetで発行されたイベント名
+	//第二引数:イベントが発生したときに呼び出される関数
 	$rootScope.$on('selectNote', function(event,data) {
+		
 		//this.server.get()は、Serverスクリプトを呼び出し、カスタム入力を渡す
-		//this.server.get()はプロミスを返す。
-		//サーバーからレスポンスを受信すると、.then()関数のロジックが実行される。
+		//this.server.get()はプロミスを返す。		
 		c.server.get({
 			action: 'getNote',
 			noteID: $rootScope.noteID
+			
+		//サーバーからレスポンスを受信すると、.then()関数のロジックが実行される。
 		}).then(function(r) {
 			c.data.title = r.data.note.title;
 			c.data.note = r.data.note.note;
@@ -80,14 +83,14 @@ function($scope,$rootScope) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-12-17 07:53:57</sys_created_on>
         <sys_id>2390a424db284110c42a8e47489619ed</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>Notes Body</sys_name>
         <sys_package display_value="CreateNotes" source="x_snc_createnotes">df5fd9a5090232007f44e1046c8ff69f</sys_package>
         <sys_policy/>
         <sys_scope display_value="CreateNotes">df5fd9a5090232007f44e1046c8ff69f</sys_scope>
         <sys_update_name>sp_widget_2390a424db284110c42a8e47489619ed</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-12-20 08:06:25</sys_updated_on>
+        <sys_updated_on>2021-12-23 07:23:29</sys_updated_on>
         <template><![CDATA[<!--Notes List Widgetでレコードを選択するまで、PortalPageに以下のHTMLが表示されないのは
 なぜか、、、、
 AngularJSのディレクティブであるng-showが、c.data.noteIDに値があるかどうかに基づいてWidgetを
